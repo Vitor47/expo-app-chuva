@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, ActivityIndicator, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../services/api";
 import {
@@ -15,6 +16,7 @@ import { OcurrencesList } from "../../components/Card";
 import IconLocal from "../../../assets/iconlocal.png";
 
 export default function ListOccurrences() {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [occurrences, setOccurrences] = useState([]);
 
@@ -55,7 +57,7 @@ export default function ListOccurrences() {
             Ocorrências perto de você
           </Title>
 
-          <Link onPress={() => navigation.navigate("CreateOcurrence")}>
+          <Link onPress={() => navigation.navigate("CreateOccurrence")}>
             <LinkText>Nova Ocorrência</LinkText>
           </Link>
         </MarginHeader>

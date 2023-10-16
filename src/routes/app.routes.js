@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ListOccurrences from '../pages/ListOccurrences';
 import DetailOccurrence from '../pages/DetailOccurrence';
+import CreateOccurrence from '../pages/CreateOccurrence';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -17,6 +18,13 @@ function AuthRoutes() {
             <AuthStack.Screen
                 name="DetailOccurrence"
                 component={DetailOccurrence}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <AuthStack.Screen
+                name="CreateOccurrence"
+                component={CreateOccurrence}
                 options={{
                     headerShown: false,
                 }}

@@ -64,6 +64,6 @@ export const ContainerInput = styled(View)`
 `;
 
 export const ImageOccurrence = styled.Image`
-  width: 308px;
+  width: 100%;
   height: 125px;
 `;
