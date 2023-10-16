@@ -23,12 +23,13 @@ export const OcurrencesList = ({ data }) => {
   const formattedDate = createdAtDate.toLocaleDateString("pt-BR", options);
 
   const getRiskLevelText = {
-    1: "Baixo",
-    2: "Médio",
-    3: "Alto",
+    1: "Muito Baixo",
+    2: "Baixo",
+    3: "Médio",
+    4: "Alto",
+    5: "Muito Alto",
   };
 
-  // Define a function to capitalize the first letter of a string
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
