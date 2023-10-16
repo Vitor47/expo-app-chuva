@@ -13,8 +13,6 @@ export const ScrollViewContent = styled(ScrollView)`
 
 export const FormArea = styled.View`
   padding: 18px;
-  border-width: 1px;
-  border-color: #ccc;
   border-radius: 5px;
   margin-bottom: 8px;
 `;
@@ -33,10 +31,10 @@ export const InputContainer = styled(View)`
 `;
 
 export const Label = styled(Text)`
-  font-size: 16px;
-  margin-bottom: 6px;
-  font-weight: bold;
-  color: #000; /* Cor de texto padrão */
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
 `;
 
 export const ErrorText = styled(Text)`
@@ -50,18 +48,21 @@ export const StyledSwitch = styled.Switch`
   height: 40px;
 `;
 
-export const Button = styled.TouchableOpacity`
-  background-color: green;
-  width: 100%;
-  height: 45px;
-  border-radius: 4px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
+export const Link = styled.TouchableOpacity`
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
-export const ButtonText = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
+
+export const LinkText = styled.Text`
+  color: #171717;
+  color: rgba(2, 2, 2, 0.79);
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+`;
+
+export const LinkLogin = styled.Text`
+  color: #68B2F8;
 `;

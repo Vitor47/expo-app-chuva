@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { Platform, ActivityIndicator } from 'react-native';
+import { Platform } from 'react-native';
 import LogoImg from '../../../assets/logo.png';
+
+import { CustomSubmitButton } from "../../components/Button";
 
 import {
   Background,
@@ -8,8 +10,6 @@ import {
   Logo,
   AreaInput,
   Input,
-  SubmitButton,
-  SubmitText,
   Link,
   LinkText,
   TextLabel
@@ -21,7 +21,7 @@ import { AuthContext } from '../../contexts/auth'
 
 export default function SignIn() {
   const navigation = useNavigation();
-  const { signIn, loadingAuth } = useContext(AuthContext); 
+  const { signIn } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +33,6 @@ export default function SignIn() {
 
   return (
     <Background>
-
       <Container
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         enabled
@@ -43,7 +42,7 @@ export default function SignIn() {
         />
 
         <AreaInput>
-        <TextLabel>E-MAIL</TextLabel>
+          <TextLabel>E-MAIL</TextLabel>
           <Input
             placeholder="DIGITE SEU E-MAIL"
             value={email}
@@ -52,7 +51,7 @@ export default function SignIn() {
         </AreaInput>
 
         <AreaInput>
-        <TextLabel>SENHA</TextLabel>
+          <TextLabel>SENHA</TextLabel>
           <Input
             placeholder="DIGITE SUA SENHA"
             value={password}
@@ -61,19 +60,13 @@ export default function SignIn() {
           />
         </AreaInput>
 
-        <SubmitButton activeOpacity={0.8} onPress={handleLogin}>
-          {
-            loadingAuth ? (
-              <ActivityIndicator size={20} color="#FFF" />
-            ) : (
-              <SubmitText>Login</SubmitText>
-            )
-          }
-        </SubmitButton>
+        <AreaInput>
+          <CustomSubmitButton activeOpacity={0.8} onPress={handleLogin} text="Login" />
 
-        <Link onPress={() => navigation.navigate('SignUp')}>
-          <LinkText>Criar nova conta</LinkText>
-        </Link>
+          <Link onPress={() => navigation.navigate('SignUp')}>
+            <LinkText>Criar nova conta</LinkText>
+          </Link>
+        </AreaInput>
 
       </Container>
 

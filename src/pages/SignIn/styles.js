@@ -30,7 +30,6 @@ export const TextLabel = styled.Text`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  font-family: ${({theme}) => theme.fonts.regular}
 `;
 
 export const Input = styled.TextInput`
@@ -40,34 +39,11 @@ export const Input = styled.TextInput`
   border-bottom-width: 1px;
   border-bottom-color: #000000;
   padding: 6px 0px 6px 0px;
-  font-family: ${({theme}) => theme.fonts.regular}
-`;
-
-
-export const SubmitButton = styled.TouchableOpacity`
-  width: 90%;
-  height: 55px;
-  margin-top: 6%;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  background: rgba(104, 178, 248, 0.85);
-`;
-
-export const SubmitText = styled.Text`
-  color: #FFF;
-  color: #FFF;
-  text-align: center;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  font-family: ${({theme}) => theme.fonts.regular}
 `;
 
 export const Link = styled.TouchableOpacity`
   margin-top: 10px;
   margin-bottom: 10px;
-  font-family: ${({theme}) => theme.fonts.regular}
 `;
 
 export const LinkText = styled.Text`
@@ -77,5 +53,4 @@ export const LinkText = styled.Text`
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
-  font-family: ${({theme}) => theme.fonts.regular}
 `;

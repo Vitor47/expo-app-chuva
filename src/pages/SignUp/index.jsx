@@ -2,22 +2,41 @@ import React, { useState } from "react";
 import { Keyboard } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
 
-import { Alert } from 'react-native';
+import { Alert } from "react-native";
 import CityPicker from "../../components/CityPicker";
 import DatePicker from "../../components/DatePicker";
-import TextInput from "../../components/TextInput";
-import { createUserSchema } from '../../utils/createUserValidation';
-import { format } from 'date-fns';
-import api from '../../services/api';
-import { Container, ErrorText, Header, FormArea, InputContainer, Label, ScrollViewContent, Button, ButtonText } from './styles';
+import { createUserSchema } from "../../utils/createUserValidation";
+import { format } from "date-fns";
+import api from "../../services/api";
+
+import {
+  Container,
+  ErrorText,
+  FormArea,
+  InputContainer,
+  Label,
+  ScrollViewContent,
+  Link,
+  LinkText,
+  LinkLogin,
+} from "./styles";
+import { CustomSubmitButton } from "../../components/Button";
+import { CustomHeader } from "../../components/HeaderLogo";
+
+import { CustomInput } from "../../components/InputForm";
 
 export default function App() {
   const navigation = useNavigation();
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const { control, handleSubmit, reset, formState: { errors } } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -33,7 +52,7 @@ export default function App() {
     Keyboard.dismiss();
 
     try {
-      const birthDate = format(new Date(data.birth_date), 'yyyy-MM-dd');
+      const birthDate = format(new Date(data.birth_date), "yyyy-MM-dd");
 
       const dataApi = {
         name: data.name,
@@ -45,7 +64,7 @@ export default function App() {
         image: data.image,
       };
 
-      await api.post('/users', dataApi);
+      await api.post("/users", dataApi);
 
       reset({
         name: "",
@@ -54,94 +73,62 @@ export default function App() {
         birth_date: new Date(),
         city: "",
       });
-      navigation.navigate('Home')
+      navigation.navigate("Home");
     } catch (error) {
       Alert.alert("Erro ao enviar dados:", error.message);
     }
-  }
+  };
 
   return (
     <Container>
+      <CustomHeader title="Criar Conta" subtitle="Insira os seus dados" />
       <ScrollViewContent>
-        <Header>Cadastro de Usuário</Header>
         <FormArea>
-          <InputContainer>
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Label>Nome</Label>
-                  <TextInput
-                    name="name"
-                    placeholder="Nome"
-                    onChange={onChange}
-                    value={value}
-                    error={errors.name}
-                  />
-                </>
-              )}
-              name="name"
-            />
-          </InputContainer>
+          <CustomInput
+            name="name"
+            label="NOME COMPLETO"
+            placeholder="DIGITE SEU NOME"
+            control={control}
+            error={errors.name}
+          />
+
+          <CustomInput
+            name="email"
+            label="E-MAIL"
+            placeholder="DIGITE SEU E-MAIL"
+            control={control}
+            error={errors.email}
+          />
+
+          <CustomInput
+            name="cpf"
+            label="CPF"
+            placeholder="DIGITE SEU CPF"
+            control={control}
+            error={errors.cpf}
+            type="numeric"
+          />
 
           <InputContainer>
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
-                  <Label>E-mail</Label>
-                  <TextInput
-                    name="email"
-                    placeholder="E-mail"
-                    onChange={onChange}
-                    value={value}
-                    error={errors.email}
-                  />
-                </>
-              )}
-              name="email"
-            />
-          </InputContainer>
-
-          <InputContainer>
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Label>CPF</Label>
-                  <TextInput
-                    name="cpf"
-                    placeholder="CPF"
-                    onChange={onChange}
-                    value={value}
-                    error={errors.cpf}
-                    keyboardType="numeric"
-                  />
-                </>
-              )}
-              name="cpf"
-            />
-          </InputContainer>
-
-          <InputContainer>
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Label>Data de Nascimento</Label>
+                  <Label>DATA DE NASCIMENTO</Label>
                   <DatePicker
                     value={value}
                     onChange={onChange}
                     showPicker={showDatePicker}
                     setShowPicker={setShowDatePicker}
                   />
-                  {errors.birth_date && <ErrorText>{errors.birth_date.message}</ErrorText>}
+                  {errors.birth_date && (
+                    <ErrorText>{errors.birth_date.message}</ErrorText>
+                  )}
                 </>
               )}
               name="birth_date"
             />
           </InputContainer>
-
 
           <InputContainer>
             <Controller
@@ -161,38 +148,28 @@ export default function App() {
             />
           </InputContainer>
 
-          <InputContainer>
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Label>Senha</Label>
-                  <TextInput
-                    name="password"
-                    placeholder="Senha"
-                    onChange={onChange}
-                    value={value}
-                    secureTextEntry={true}
-                    error={errors.password}
-                  />
-                </>
-              )}
-              name="password"
-            />
-          </InputContainer>
-
+          <CustomInput
+            name="password"
+            label="SENHA"
+            placeholder="DIGITE SUA SENHA"
+            control={control}
+            error={errors.password}
+            secureTextEntry={true}
+          />
         </FormArea>
         <InputContainer>
-          <Button onPress={handleSubmit(onSubmit)}>
-            <ButtonText>Cadastrar</ButtonText>
-          </Button>
+          <CustomSubmitButton
+            activeOpacity={0.8}
+            onPress={handleSubmit(onSubmit)}
+            text="Cadastrar"
+          />
 
-          <Link onPress={() => navigation.navigate('SignIn')}>
-            <LinkText>Já possui uma conta? Login</LinkText>
+          <Link onPress={() => navigation.navigate("SignIn")}>
+            <LinkText>
+              Já possui uma conta? <LinkLogin>Login</LinkLogin>
+            </LinkText>
           </Link>
-
         </InputContainer>
-
       </ScrollViewContent>
     </Container>
   );
