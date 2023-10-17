@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../services/api";
@@ -17,28 +22,36 @@ import IconLocal from "../../../assets/iconlocal.png";
 
 export default function ListOccurrences() {
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [occurrences, setOccurrences] = useState([]);
 
-  useEffect(() => {
-    async function loadOccurrences() {
-      try {
-        const token = await AsyncStorage.getItem("@authToken");
-        const response = await api.get(`occurrences`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const loadOccurrences = async () => {
+    try {
+      const token = await AsyncStorage.getItem("@authToken");
+      const response = await api.get(`occurrences`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        setOccurrences(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Erro ao carregar as ocorrencias:", error);
-      }
+      setOccurrences(response.data.data);
+      setLoading(false);
+      setRefreshing(false);
+    } catch (error) {
+      console.error("Erro ao carregar as ocorrencias:", error);
     }
+  };
 
+  useEffect(() => {
     loadOccurrences();
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setOccurrences([]);
+    loadOccurrences();
+  };
 
   if (loading) {
     return (
@@ -67,6 +80,9 @@ export default function ListOccurrences() {
         data={occurrences}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => <OcurrencesList data={item} />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </Container>
   );

@@ -69,11 +69,13 @@ export default function App() {
       reset({
         name: "",
         email: "",
+        password: "",
         cpf: "",
         birth_date: new Date(),
         city: "",
+        image: "",
       });
-      navigation.navigate("Home");
+      navigation.navigate("SignIn");
     } catch (error) {
       Alert.alert("Erro ao enviar dados:", error.message);
     }
